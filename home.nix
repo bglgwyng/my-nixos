@@ -26,9 +26,26 @@
       autocd = true;
       historySubstringSearch.enable = true;
     };
-    starship.enable = true;
+    zsh.plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+    ];
     home-manager.enable = true;
   };
+
+  home.file.".p10k.zsh".source = ./.p10k.zsh;
+
+  programs.zsh.initExtraFirst = ''
+    if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+      source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+    fi
+  '';
+  programs.zsh.initExtra = ''
+    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+  '';
 
   services.ssh-agent.enable = true;
 
