@@ -24,7 +24,7 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       autocd = true;
-      historySubstringSearch.enable = true;
+
     };
     zsh.plugins = [
       {
@@ -45,6 +45,14 @@
   '';
   programs.zsh.initExtra = ''
     [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+    autoload -U up-line-or-beginning-search down-line-or-beginning-search
+    zle -N up-line-or-beginning-search
+    zle -N down-line-or-beginning-search
+    bindkey '^[[A' up-line-or-beginning-search
+    bindkey '^[[B' down-line-or-beginning-search
+    bindkey '^[OA' up-line-or-beginning-search
+    bindkey '^[OB' down-line-or-beginning-search
   '';
 
   services.ssh-agent.enable = true;
