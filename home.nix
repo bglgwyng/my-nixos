@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home = {
     username = "bglgwyng";
@@ -14,10 +14,12 @@
   programs = {
     git = {
       enable = true;
-      userName = "bgl gwyng";
-      userEmail = "bgl@gwyng.com";
-      difftastic.enable = true;
+      settings.user = {
+        name = "bgl gwyng";
+      email = "bgl@gwyng.com";
+      };
     };
+    difftastic.enable = true;
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -43,22 +45,24 @@
   home.file.".p10k.zsh".source = ./.p10k.zsh;
 
   programs.zsh = {
-    initExtraFirst = ''
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-    '';
-    initExtra = ''
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+    initContent = lib.mkMerge [
+      (lib.mkBefore ''
+        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+        fi
+      '')
+      ''
+        [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-      autoload -U up-line-or-beginning-search down-line-or-beginning-search
-      zle -N up-line-or-beginning-search
-      zle -N down-line-or-beginning-search
-      bindkey '^[[A' up-line-or-beginning-search
-      bindkey '^[[B' down-line-or-beginning-search
-      bindkey '^[OA' up-line-or-beginning-search
-      bindkey '^[OB' down-line-or-beginning-search
-    '';
+        autoload -U up-line-or-beginning-search down-line-or-beginning-search
+        zle -N up-line-or-beginning-search
+        zle -N down-line-or-beginning-search
+        bindkey '^[[A' up-line-or-beginning-search
+        bindkey '^[[B' down-line-or-beginning-search
+        bindkey '^[OA' up-line-or-beginning-search
+        bindkey '^[OB' down-line-or-beginning-search
+      ''
+    ];
   };
 
   services.ssh-agent.enable = true;
