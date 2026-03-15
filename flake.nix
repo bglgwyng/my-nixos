@@ -32,6 +32,12 @@
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         modules = [
           ./configuration.nix
+          {
+            nix = {
+              nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+              registry.nixpkgs.flake = inputs.nixpkgs;
+            };
+          }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
