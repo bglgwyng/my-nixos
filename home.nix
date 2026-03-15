@@ -24,7 +24,6 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       autocd = true;
-
     };
     zsh.plugins = [
       {
@@ -38,22 +37,24 @@
 
   home.file.".p10k.zsh".source = ./.p10k.zsh;
 
-  programs.zsh.initExtraFirst = ''
-    if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-      source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-    fi
-  '';
-  programs.zsh.initExtra = ''
-    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+  programs.zsh = {
+    initExtraFirst = ''
+      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+    '';
+    initExtra = ''
+      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-    autoload -U up-line-or-beginning-search down-line-or-beginning-search
-    zle -N up-line-or-beginning-search
-    zle -N down-line-or-beginning-search
-    bindkey '^[[A' up-line-or-beginning-search
-    bindkey '^[[B' down-line-or-beginning-search
-    bindkey '^[OA' up-line-or-beginning-search
-    bindkey '^[OB' down-line-or-beginning-search
-  '';
+      autoload -U up-line-or-beginning-search down-line-or-beginning-search
+      zle -N up-line-or-beginning-search
+      zle -N down-line-or-beginning-search
+      bindkey '^[[A' up-line-or-beginning-search
+      bindkey '^[[B' down-line-or-beginning-search
+      bindkey '^[OA' up-line-or-beginning-search
+      bindkey '^[OB' down-line-or-beginning-search
+    '';
+  };
 
   services.ssh-agent.enable = true;
 
