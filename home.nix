@@ -9,6 +9,8 @@
     pkgs.claude-code
     pkgs.devenv
     pkgs.gh
+    pkgs.nil
+    pkgs.nixd
   ];
 
   programs = {
