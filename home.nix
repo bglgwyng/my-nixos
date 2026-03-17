@@ -40,6 +40,10 @@
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
+    zed-editor= {
+      enable = true;
+      installRemoteServer = true;
+    };
   };
 
   home.file.".p10k.zsh".source = ./.p10k.zsh;
