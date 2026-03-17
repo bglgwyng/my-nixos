@@ -16,7 +16,7 @@
       enable = true;
       settings.user = {
         name = "bgl gwyng";
-      email = "bgl@gwyng.com";
+        email = "bgl@gwyng.com";
       };
     };
     difftastic.enable = true;
